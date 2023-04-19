@@ -97,8 +97,13 @@ public class MyArrayList<E> implements MyList<E>{
     }
 
     @Override
-    public int IndexOf(Object o) {
-        return 0;
+    public int indexOf(Object o) {
+        for (int i = 0; i < size; i++){
+            if (arr[i].equals(o)){
+                return i;
+            }
+        }
+        return -1;
     }
 
     @Override
