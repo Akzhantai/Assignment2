@@ -1,10 +1,10 @@
-public class MyLinkedList<E> implements MyList<E>{
-    private class Node{
+public class MyLinkedList<E> implements MyList<E> {
+    private class Node {
         E element;
         Node next;
         Node prev;
 
-        public Node(E element){
+        public Node(E element) {
             this.element = element;
             this.next = null;
             this.prev = null;
@@ -15,11 +15,12 @@ public class MyLinkedList<E> implements MyList<E>{
     private Node tail;
     private int size;
 
-    public MyLinkedList(){
+    public MyLinkedList() {
         head = null;
         tail = null;
         size = 0;
     }
+
     @Override
     public int size() {
         return size;
@@ -27,11 +28,12 @@ public class MyLinkedList<E> implements MyList<E>{
 
     @Override
     public boolean contains(Object o) {
-        if (head == null){
+        if (head == null) {
             return false;
-        }Node current =head;
-        while (current != null){
-            if (current.element.equals(o)){
+        }
+        Node current = head;
+        while (current != null) {
+            if (current.element.equals(o)) {
                 return true;
             }
         }
@@ -41,11 +43,10 @@ public class MyLinkedList<E> implements MyList<E>{
     @Override
     public void add(E item) {
         Node newNode = new Node(item);
-        if (head == null){
+        if (head == null) {
             head = newNode;
             tail = newNode;
-        }
-        else {
+        } else {
             tail.next = newNode;
             newNode.prev = tail;
             tail = newNode;
@@ -55,7 +56,29 @@ public class MyLinkedList<E> implements MyList<E>{
 
     @Override
     public void add(E item, int index) {
-
+        if (index < 0 || index > size) {
+            throw new IndexOutOfBoundsException();
+        }
+        Node newNode = new Node(item);
+        if (index == 0) {
+            newNode.next = head;
+            head.prev = newNode;
+            head = newNode;
+        } else if (index == size) {
+            tail.next = newNode;
+            newNode.prev = tail;
+            tail = newNode;
+        } else {
+            Node current = head;
+            for (int i = 0; i < index; i++) {
+                current = current.next;
+            }
+            current.prev.next = newNode;
+            newNode.prev = current.prev;
+            newNode.next = current;
+            current.prev = newNode;
+        }
+        size++;
     }
 
     @Override
