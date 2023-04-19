@@ -202,6 +202,63 @@ public class MyLinkedList<E> implements MyList<E> {
 
     @Override
     public void sort() {
+        head = mergeSort(head);
+        // Update tail reference
+        Node current = head;
+        while (current != null && current.next != null) {
+            current = current.next;
+        }
+        tail = current;
+    }
 
+    private Node mergeSort(Node node) {
+        if (node == null || node.next == null) {
+            return node;
+        }
+        // Split list in half
+        Node slow = node;
+        Node fast = node.next;
+        while (fast != null && fast.next != null) {
+            slow = slow.next;
+            fast = fast.next.next;
+        }
+        Node second = slow.next;
+        slow.next = null;
+        second.prev = null;
+        // Recursively merge sublists
+        Node left = mergeSort(node);
+        Node right = mergeSort(second);
+        return merge(left, right);
+    }
+
+    private Node merge(Node left, Node right) {
+        Node dummy = new Node(null);
+        Node current = dummy;
+        while (left != null && right != null) {
+            if (((Comparable<E>)left.element).compareTo(right.element) < 0) {
+                current.next = left;
+                left.prev = current;
+                left = left.next;
+            } else {
+                current.next = right;
+                right.prev = current;
+                right = right.next;
+            }
+            current = current.next;
+        }
+        if (left != null) {
+            current.next = left;
+            left.prev = current;
+        } else {
+            current.next = right;
+            right.prev = current;
+        }
+        // Update prev references
+        Node tail = dummy.next;
+        while (tail.next != null) {
+            tail.next.prev = tail;
+            tail = tail.next;
+        }
+        return dummy.next;
     }
 }
