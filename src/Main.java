@@ -1,12 +1,12 @@
 public class Main {
     public static void main(String[] args) {
-        MyArrayList<String> myArray = new MyArrayList<String>();
-        myArray.add("1");
-        myArray.add("2");
-        myArray.add("3");
-        myArray.add("4");
-        myArray.add("5");
-        myArray.indexOf(5);
+        MyArrayList<Integer> myArray = new MyArrayList<Integer>();
+        myArray.add(1);
+        myArray.add(2);
+        myArray.add(9);
+        myArray.add(5);
+        myArray.add(7);
+        myArray.sort();
         for (int i = 0; i < myArray.size(); i++) {
             System.out.println(myArray.get(i));
         }

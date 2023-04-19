@@ -118,6 +118,15 @@ public class MyArrayList<E> implements MyList<E>{
 
     @Override
     public void sort() {
-
+        for (int i = 0; i < size-1; i++){
+            for (int j = i+1; j < size; j++){
+                E e1 = (E) arr[i];
+                E e2 = (E) arr[j];
+                if(((Comparable<E>)e1).compareTo(e2)>0){
+                    arr[i] = e2;
+                    arr[j] = e1;
+                }
+            }
+        }
     }
 }
