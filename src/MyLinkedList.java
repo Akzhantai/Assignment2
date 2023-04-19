@@ -83,12 +83,61 @@ public class MyLinkedList<E> implements MyList<E> {
 
     @Override
     public boolean remove(E item) {
+        if (head == null) {
+            return false;
+        }
+        if (head.element.equals(item)) {
+            head = head.next;
+            if (head != null) {
+                head.prev = null;
+            } else {
+                tail = null;
+            }
+            size--;
+            return true;
+        }
+        Node current = head.next;
+        while (current != null) {
+            if (current.element.equals(item)) {
+                current.prev.next = current.next;
+                if (current.next != null) {
+                    current.next.prev = current.prev;
+                } else {
+                    tail = current.prev;
+                }
+                size--;
+                return true;
+            }
+            current = current.next;
+        }
         return false;
     }
 
     @Override
     public E remove(int index) {
-        return null;
+        if (index < 0 || index >= size) {
+            throw new IndexOutOfBoundsException();
+        }
+        Node current = head;
+        for (int i = 0; i < index; i++) {
+            current = current.next;
+        }
+        if (current == head) {
+            head = head.next;
+            if (head != null) {
+                head.prev = null;
+            } else {
+                tail = null;
+            }
+        } else if (current == tail) {
+            tail = tail.prev;
+            tail.next = null;
+        } else {
+            current.prev.next = current.next;
+            current.next.prev = current.prev;
+        }
+        size--;
+        return current.element;
     }
 
     @Override
