@@ -134,4 +134,18 @@ public class MyArrayList<E> implements MyList<E>{
             }
         }
     }
+    public void duplicate() {
+        Object[] newArr = new Object[arr.length];
+        for (int i = 0; i < size; i++) {
+            newArr[i] = arr[i];
+            for (int j = 0; j < size; j++) {
+                arr[j] = newArr[j];
+            }
+        }
+    }
+    public void deleteAllDuplicates(){
+        for (int i = 0; i < size-1; i++){
+            duplicate();
+        }size--;
+    }
 }
